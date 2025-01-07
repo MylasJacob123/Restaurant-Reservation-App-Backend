@@ -33,4 +33,30 @@ const addRestaurant = async (req, res) => {
     }
 };
 
-module.exports = { getRestaurants, addRestaurant };
+const updateRestaurant = async (req, res) => {
+    try {
+        const { id } = req.params; 
+        const { name, location, cuisine, description, reservationSlots, admin } = req.body;
+
+        const restaurantToUpdate = await restaurant.findById(id);
+        if (!restaurantToUpdate) {
+            return res.status(404).json({ error: "Restaurant not found" });
+        }
+
+        if (name) restaurantToUpdate.name = name;
+        if (location) restaurantToUpdate.location = location;
+        if (cuisine) restaurantToUpdate.cuisine = cuisine;
+        if (description) restaurantToUpdate.description = description;
+        if (reservationSlots) restaurantToUpdate.reservationSlots = reservationSlots;
+        if (admin) restaurantToUpdate.admin = admin;
+
+        const updatedRestaurant = await restaurantToUpdate.save();
+        res.status(200).json(updatedRestaurant);
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+module.exports = { getRestaurants, addRestaurant, updateRestaurant };
