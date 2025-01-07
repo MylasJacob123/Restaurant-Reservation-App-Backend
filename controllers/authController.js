@@ -38,6 +38,40 @@ const login = async (req, res) => {
     }
 };
 
+const updateUser = async (req, res) => {
+    const { name, email } = req.body;
+    const userId = req.user.id;  
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ error: "User not found" });
+
+        if (name) user.name = name;
+        if (email) user.email = email;
+
+        await user.save();
+
+        res.json({ message: "User updated successfully", user });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+const deleteUser = async (req, res) => {
+    const userId = req.user.id;  
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ error: "User not found" });
+
+        await User.deleteOne({ _id: userId });
+
+        res.json({ message: "User deleted successfully" });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
 const forgotPassword = async (req, res) => {
     const { email } = req.body;
     try {
@@ -91,4 +125,4 @@ const resetPassword = async (req, res) => {
     }
 };
 
-module.exports = { register, login, forgotPassword, resetPassword };
+module.exports = { register, login, forgotPassword, resetPassword, updateUser, deleteUser };
