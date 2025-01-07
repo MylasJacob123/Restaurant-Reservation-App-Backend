@@ -11,7 +11,7 @@ const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new User({ name, email, password: hashedPassword, role });
         await user.save();
-        res.status(201).json({ message: "User registered successfully" });
+        res.status(201).json({ message: "Registration successfully" });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -51,7 +51,7 @@ const updateUser = async (req, res) => {
 
         await user.save();
 
-        res.json({ message: "User updated successfully", user });
+        res.json({ message: "Updated successfully", user });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -66,7 +66,7 @@ const deleteUser = async (req, res) => {
 
         await User.deleteOne({ _id: userId });
 
-        res.json({ message: "User deleted successfully" });
+        res.json({ message: "Deleted successfully" });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
