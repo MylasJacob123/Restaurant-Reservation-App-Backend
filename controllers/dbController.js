@@ -58,5 +58,21 @@ const updateRestaurant = async (req, res) => {
     }
 };
 
+const deleteRestaurant = async (req, res) => {
+    try {
+        const { id } = req.params; 
 
-module.exports = { getRestaurants, addRestaurant, updateRestaurant };
+        const deletedRestaurant = await restaurant.findByIdAndDelete(id);
+        if (!deletedRestaurant) {
+            return res.status(404).json({ error: "Restaurant not found" });
+        }
+
+        res.status(200).json({ message: "Restaurant deleted successfully", deletedRestaurant });
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+module.exports = { getRestaurants, addRestaurant, updateRestaurant, deleteRestaurant };
