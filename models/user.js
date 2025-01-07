@@ -20,6 +20,8 @@ const userSchema = mongoose.Schema({
       enum: ["admin", "user"],
       default: "user",
     },
+    resetPasswordToken: { type: String },
+    resetPasswordExpires: { type: Date },
 }, { timestamps: true });
 
 module.exports = mongoose.model("user", userSchema);
