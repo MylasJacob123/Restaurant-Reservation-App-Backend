@@ -1,5 +1,14 @@
 const express = require("express");
-const { getRestaurants, addRestaurant, updateRestaurant, deleteRestaurant, getReservations, addReservation } = require("../controllers/dbController");
+const {
+  getRestaurants,
+  addRestaurant,
+  updateRestaurant,
+  deleteRestaurant,
+  getReservations,
+  addReservation,
+  updateReservation,
+  deleteReservation
+} = require("../controllers/dbController");
 const router = express.Router();
 
 // RESTAURANT ROUTES
@@ -11,5 +20,7 @@ router.delete("/delete-restaurant/:id", deleteRestaurant);
 // RESERVATION ROUTES
 router.get("/get-reservations", getReservations);
 router.post("/add-reservation", addReservation);
+router.put("/update-reservation/:id", updateReservation);
+router.delete("/delete-reservation/:id", deleteReservation);
 
 module.exports = router;
