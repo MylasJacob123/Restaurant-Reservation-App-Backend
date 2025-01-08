@@ -149,6 +149,19 @@ const addReservation = async (req, res) => {
       return res.status(404).json({ error: "Restaurant not found." });
     }
 
+    // Check if a reservation already exists for the same user, restaurant, and date
+    const existingReservation = await reservation.findOne({
+      user,
+      restaurant: restaurantId,
+      date,
+    });
+
+    if (existingReservation) {
+      return res.status(400).json({
+        error: "A reservation already exists for this user, restaurant, and date.",
+      });
+    }
+
     const newReservation = new reservation({
       user,
       restaurant: restaurantId,

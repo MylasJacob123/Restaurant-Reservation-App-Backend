@@ -22,4 +22,9 @@ const reservationSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+reservationSchema.index(
+  { user: 1, restaurant: 1, date: 1 },
+  { unique: true }
+);
+
 module.exports = mongoose.model("reservation", reservationSchema);
